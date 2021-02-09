@@ -25,7 +25,9 @@
         <a href="/"><img src="/logo.png" alt="ГдеМатериал.Ру"></a> <!--TODO(iNerV) do dynamically link-->
       </div>
       <div class="main-navigation__burger">
-        <button class="main-navigation__open-menu-btn">
+        <button class="main-navigation__open-menu-btn"
+                @click="setVisible"
+        >
           Menu
         </button>
       </div>
@@ -41,62 +43,37 @@
         </li>
       </ul>
     </nav>
-    <ul class="site-navigation">
-      <li class="site-navigation__item">
-        <a class="site-navigation__link" href="/">Category</a>
-      </li>
-      <li class="site-navigation__item">
-        <a class="site-navigation__link" href="/">Category2</a>
-      </li>
-      <li class="site-navigation__item">
-        <a class="site-navigation__link" href="/">Category3</a>
-      </li>
-      <li class="site-navigation__item">
-        <a class="site-navigation__link" href="/">Category4</a>
-      </li>
-      <li class="site-navigation__item">
-        <a class="site-navigation__link" href="/">Category5</a>
-      </li>
-      <li class="site-navigation__item">
-        <a class="site-navigation__link" href="/">Category6</a>
-      </li>
-      <li class="site-navigation__item">
-        <a class="site-navigation__link" href="/">Category7</a>
-      </li>
-      <li class="site-navigation__item">
-        <a class="site-navigation__link" href="/">Category8</a>
-      </li>
-      <li class="site-navigation__item">
-        <a class="site-navigation__link" href="/">Category9</a>
-      </li>
-      <li class="site-navigation__item">
-        <a class="site-navigation__link" href="/">Category10</a>
-      </li>
-      <li class="site-navigation__item">
-        <a class="site-navigation__link" href="/">Category11</a>
-      </li>
-      <li class="site-navigation__item">
-        <a class="site-navigation__link" href="/">Category12</a>
-      </li>
-      <li class="site-navigation__item">
-        <a class="site-navigation__link" href="/">Category13</a>
-      </li>
-      <li class="site-navigation__item">
-        <a class="site-navigation__link" href="/">Category14</a>
-      </li>
-      <li class="site-navigation__item">
-        <a class="site-navigation__link" href="/">Category15</a>
-      </li>
-      <li class="site-navigation__item">
-        <a class="site-navigation__link" href="/">Category16</a>
-      </li>
-    </ul>
+    <Menu
+      v-if="isMenuVisible"
+      :menu="menu"
+    />
   </header>
 </template>
 
 <script>
+import { mapState } from 'vuex';
+import Menu from './Menu.vue';
+
 export default {
   name: 'PageHeader',
+  components: {
+    Menu,
+  },
+  data() {
+    return {
+    };
+  },
+  computed: {
+    ...mapState({
+      isMenuVisible: (state) => state.the_menu.menu_is_visible,
+      menu: (state) => state.the_menu.menu,
+    }),
+  },
+  methods: {
+    setVisible() {
+      this.$store.commit('the_menu/SET_MENU_VISIBLE', !this.isMenuVisible);
+    },
+  },
 };
 </script>
 
